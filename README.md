@@ -1,4 +1,4 @@
-# Data and Scripts for Antibiotic recovery study
+# Antibiotic recovery study
 
 This repository contains all the data and the necessary scripts used in the manuscript "Metagenome-wide association analysis identifies microbial determinants of post-antibiotic ecological recovery in the gut".
 
