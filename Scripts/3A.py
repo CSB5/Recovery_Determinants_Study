@@ -5,6 +5,9 @@ Created on Wed Feb 12 10:42:07 2020
 This code performs association rule mining using the python package apriori for
 different threshold values given.
 
+This code requires the following packages: pandas, networkx and efficient_apriori.
+All these packages can be downloaded via pip.
+
 Input
 ------
 (a) MEDUSA database organism reads counts where the columns are
