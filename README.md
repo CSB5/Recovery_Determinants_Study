@@ -23,6 +23,6 @@ The raw sequence data associated with this project can be found under following 
 
 ## Citation
 
-Metagenome-wide association analysis identifies microbial determinants of post-antibiotic ecological recovery in the gut, *(under revision)*
+Metagenome-wide association analysis identifies microbial determinants of post-antibiotic ecological recovery in the gut, https://www.nature.com/articles/s41559-020-1236-0.
 
 
