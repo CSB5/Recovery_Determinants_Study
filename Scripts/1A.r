@@ -55,7 +55,10 @@ NR_1 <- NR_MedianDiversity_Stages
 NR_MedianDiversity_Stages <- NR_MedianDiversity_Stages[setdiff(rownames(NR_MedianDiversity_Stages),NR_remove_rows),]
 NR_MedianDiversity_Stages$Stage <- factor(NR_MedianDiversity_Stages$Stage,levels=c("PRE","DURING","POST"))
 
-R_summary <- data.frame(Stage=unique(factor(R_MedianDiversity_Stages$Stage,levels=c("PRE","POST","DURING"))), n=tapply(R_MedianDiversity_Stages$MedianDiversity, factor(R_MedianDiversity_Stages$Stage,levels=c("PRE","DURING","POST")), length), mean=tapply(R_MedianDiversity_Stages$MedianDiversity, factor(R_MedianDiversity_Stages$Stage,levels=c("PRE","DURING","POST")), median))
+R_summary <- data.frame(Stage=unique(factor(R_MedianDiversity_Stages$Stage,levels=c("PRE","POST","DURING"))),
+ n=tapply(R_MedianDiversity_Stages$MedianDiversity,
+  factor(R_MedianDiversity_Stages$Stage,levels=c("PRE","DURING","POST")), length), 
+ mean=tapply(R_MedianDiversity_Stages$MedianDiversity, factor(R_MedianDiversity_Stages$Stage,levels=c("PRE","DURING","POST")), median))
 R_summary$sd <- tapply(R_MedianDiversity_Stages$MedianDiversity, factor(R_MedianDiversity_Stages$Stage,levels=c("PRE","DURING","POST")), sd)
 R_summary$sem <- R_summary$sd/sqrt(R_summary$n-1)
 R_summary$lower_25 <- R_summary$mean + qt((1-0.25)/2, df=R_summary$n-1)*R_summary$sem
@@ -84,7 +87,12 @@ rownames(NR_summary) <- c("PRE","DURING","POST")
 NR_summary$Stage <- c(1,2,3)
 
 #Plot Ribbon R
-g1 <- ggplot(R_summary) + geom_line(aes(x=Stage,y=mean),stat="smooth",method="auto",color="blue4",size=2) + geom_line(aes(x=Stage,y=higher_25),stat="smooth",method="auto") + geom_line(aes(x=Stage,y=lower_25),stat="smooth",method="auto")+ geom_line(aes(x=Stage,y=higher_50),stat="smooth",method="auto") + geom_line(aes(x=Stage,y=lower_50),stat="smooth",method="auto")+ geom_line(aes(x=Stage,y=higher_75),stat="smooth",method="auto") + geom_line(aes(x=Stage,y=lower_75),stat="smooth",method="auto")
+g1 <- ggplot(R_summary) + 
+geom_line(aes(x=Stage,y=mean),stat="smooth",method="auto",color="blue4",size=2) + 
+geom_line(aes(x=Stage,y=higher_25),stat="smooth",method="auto") +
+ geom_line(aes(x=Stage,y=lower_25),stat="smooth",method="auto")+ 
+ geom_line(aes(x=Stage,y=higher_50),stat="smooth",method="auto") + 
+ geom_line(aes(x=Stage,y=lower_50),stat="smooth",method="auto")+ geom_line(aes(x=Stage,y=higher_75),stat="smooth",method="auto") + geom_line(aes(x=Stage,y=lower_75),stat="smooth",method="auto")
 gg1 <- ggplot_build(g1)
 g1_ribbon <- data.frame(x = gg1$data[[1]]$x, ymax_25 = gg1$data[[2]]$y, ymin_25 = gg1$data[[3]]$y, ymax_50 = gg1$data[[4]]$y, ymin_50 = gg1$data[[5]]$y, ymax_75 = gg1$data[[6]]$y, ymin_75 = gg1$data[[7]]$y) 
 g1 +  geom_ribbon(data = g1_ribbon, aes(x = x, ymin = ymin_75, ymax = ymax_75), fill = "yellow", alpha = 0.4) +  geom_ribbon(data = g1_ribbon, aes(x = x, ymin = ymin_75, ymax = ymax_75), fill = "darkgoldenrod1", alpha = 0.4) + geom_ribbon(data = g1_ribbon, aes(x = x, ymin = ymin_50, ymax = ymax_50), fill = "orange", alpha = 0.4) + geom_ribbon(data = g1_ribbon, aes(x = x, ymin = ymin_25, ymax = ymax_25), fill = "firebrick4", alpha = 0.4) + theme_bw() + theme(axis.text=element_text(size=20)) +ylim(0.6,1)
